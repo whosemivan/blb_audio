@@ -139,6 +139,10 @@
         background-repeat: no-repeat;
         cursor: url("../public/icons/cursor-hover.svg"), auto;
 
+        &:disabled {
+            opacity: 0.6;
+        }
+
         &::-webkit-slider-thumb {
             -webkit-appearance: none;
             height: 15px;

@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import Head from 'next/head';
 import { Howl } from 'howler';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { saveAs } from 'file-saver';
 import audioBufferToWav from 'audiobuffer-to-wav';
 import { AudioContext } from 'standardized-audio-context';
@@ -13,66 +13,79 @@ import axios from '../core/axios.js';
 import * as Api from "../api";
 
 const Main = () => {
-    const audioRef = React.createRef(null);
-    const soundRef = React.createRef(null);
-    const [audioSrc, setAudioSrc] = useState('');
+    // const soundRef = React.createRef(null);
     const [audioName, setAudioName] = useState('');
     const [isFileUploaded, setFileUploaded] = useState(false);
     const [speed, setSpeed] = useState(1);
+    const [sound, setSound] = useState();
+    // i decided to do this state, because audio has AudioBufer object only when it plays, when i stop it, AudioBuffer = null, i should do it because my programm is depened of AudioBuffer object.
+    const [audioBuf, setAudioBuf] = useState({});
+    const [isPlay, setPlay] = useState(false);
 
-    const handlePlay = () => {
-        if (audioRef.current) {
-            const sound = new Howl({
-                src: [audioSrc], // Replace with the path to your audio file
-                rate: speed, // Initial playback rate (normal speed)
-                format: ["mp3", "opus", "ogg", "wav", "aac", "m4a", "m4b", "mp4", "webm"]
-            });
+    useEffect(() => {
+        speedChange();
+    }, [speed])
 
-            // Start playing the audio
-
-            sound.play();
-
-            soundRef.current = sound;
-            console.log(soundRef.current);
-        }
-    };
-
-    const handleChange = () => { }
-
-    function handleFileSelect(event) {
+    const handleFileSelect = async (event) => {
         const file = event.target.files[0];
         const fileUrl = URL.createObjectURL(file);
         setAudioName(event.target.files[0].name);
 
-        setAudioSrc(fileUrl);
 
         if (file) {
             setFileUploaded(true);
+
+            const sound = new Howl({
+                src: [fileUrl], // Replace with the path to your audio file
+                rate: speed, // Initial playback rate (normal speed)
+                format: ["mp3", "opus", "ogg", "wav", "aac", "m4a", "m4b", "mp4", "webm"]
+            });
+
+            sound.play()
+            setPlay(true);
+
+            setSound(sound);
         }
     }
 
-    function handleDownload() {
-        console.log(soundRef.current);
-        if (soundRef.current) {
-            console.log('here');
-            const audioCtx = new AudioContext();
-            const sound = soundRef.current;
+    const handlePlay = () => {
+        if (sound && !isPlay) {
+            sound.play();
+            setAudioBuf(sound._sounds[0]._node.bufferSource.buffer);
+            setPlay(true);
+        }
+    };
 
+    const handleStop = () => {
+        setAudioBuf(sound._sounds[0]._node.bufferSource.buffer);
+
+        if (sound && isPlay) {
+            sound.stop();
+            setPlay(false);
+        }
+    }
+
+
+    const speedChange = () => {
+        if (sound) {
+            sound._rate = speed;
+        }
+    }
+
+
+    const handleDownload = () => {
+        if (sound) {
+            const audioCtx = new AudioContext();
             // save in wav format
-            const audioBuffer = audioCtx.createBuffer(2, sound._sounds[0]._node.bufferSource.buffer.length, sound._sounds[0]._node.bufferSource.buffer.sampleRate * speed);
-            audioBuffer.copyToChannel(sound._sounds[0]._node.bufferSource.buffer.getChannelData(0), 0);
-            audioBuffer.copyToChannel(sound._sounds[0]._node.bufferSource.buffer.getChannelData(1), 1);
+            const audioBuffer = audioCtx.createBuffer(2, audioBuf.length, audioBuf.sampleRate * speed);
+            audioBuffer.copyToChannel(audioBuf.getChannelData(0), 0);
+            audioBuffer.copyToChannel(audioBuf.getChannelData(1), 1);
             const wav = audioBufferToWav(audioBuffer);
             const wavBlob = new Blob([new DataView(wav)], { type: 'audio/wav' });
             saveAs(wavBlob, `${audioName}_blb<3.wav`);
         };
     }
 
-    function handleStop() {
-        if (soundRef.current) {
-            soundRef.current.stop();
-        }
-    }
 
     return (
         <>
@@ -97,17 +110,13 @@ const Main = () => {
                             <>
                                 <h2 className={styles.titleAudio}>{audioName}</h2>
                                 <p className={styles.audioSpeed}>{speed}x</p>
-                                <audio ref={audioRef} />
                                 <input className={styles.range} type="range" id="speed" name="speed" min="0.5" max="3" step="0.1" value={speed} onChange={(evt) => {
-                                    setSpeed(evt.target.value)
-                                }} />
+                                    setSpeed(evt.target.value);
+                                }} disabled={isPlay ? 'disabled' : ""} />
                                 <div className={styles.btnWrapper}>
-                                    <button className={styles.playBtn} onClick={handlePlay}>
-                                        Play
+                                    <button className={styles.playBtn} onClick={isPlay ? handleStop : handlePlay}>
+                                        {isPlay ? "Stop" : "Play"}
                                     </button>
-                                    {/* <button className={styles.playBtn} onClick={handleStop}>
-                                        Stop
-                                    </button> */}
 
                                     <button className={styles.downloadBtn} onClick={handleDownload}>Download</button>
                                 </div>
