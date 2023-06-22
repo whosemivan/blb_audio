@@ -1,0 +1,183 @@
+.mainWrapper {
+    width: 100%;
+    // временно
+    min-width: 1280px;
+    height: 100vh;
+    // временно
+    min-height: 760px;
+    position: relative;
+
+    &::after {
+        content: "";
+        width: 401px;
+        height: 411px;
+        position: absolute;
+        background-image: url("../public/icons/planetone.svg");
+        background-repeat: no-repeat;
+        left: 0;
+        bottom: 0;
+    }
+    &::before {
+        content: "";
+        width: 271px;
+        height: 274px;
+        position: absolute;
+        background-image: url("../public/icons/planettwo.svg");
+        background-repeat: no-repeat;
+        right: 0;
+        top: 0;
+    }
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 380px;
+    padding-top: 155px;
+
+    &::before {
+        content: "";
+        width: 140px;
+        height: 124px;
+        position: absolute;
+        background-image: url("../public/icons/stars1.svg");
+        background-repeat: no-repeat;
+        left: 107px;
+        top: 59px;
+    }
+
+    &::after {
+        content: "";
+        width: 135px;
+        height: 135px;
+        position: absolute;
+        background-image: url("../public/icons/stars1.svg");
+        background-repeat: no-repeat;
+        right: 107px;
+        bottom: 59px;
+    }
+
+    .logo {
+        margin-bottom: 20px;
+    }
+
+    .title {
+        margin: 0;
+        margin-bottom: 55px;
+        font-family: 'Limelight';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 124.179px;
+        line-height: 151px;
+        text-align: center;
+        text-transform: uppercase;
+        color: #FFFFFF;
+    }
+
+}
+
+.audioWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    width: 380px;
+
+    .btnSelect {
+        display: none;
+    }
+
+    .labelSelect {
+        display: inline-block;
+        padding: 22px 36px;
+        margin: 0;
+        font-size: 20px;
+        background-color: #3F3CE1;
+        color: #ffffff;
+        cursor: url("../public/icons/cursor-hover.svg"), auto;
+    }
+
+    .titleAudio {
+        margin: 0;
+        margin-bottom: 30px;
+        font-family: 'Prosto One';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18.99px;
+        line-height: 23px;
+        text-align: center;
+        letter-spacing: 0.575em;
+        text-transform: uppercase;
+        color: #FFFFFF;
+    }
+
+    .audioSpeed {
+        margin: 0;
+        margin-bottom: 30px;
+        font-family: 'Prosto One';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 30px;
+        line-height: 37px;
+        text-align: center;
+        letter-spacing: 0.045em;
+        text-transform: uppercase;
+        color: #4D86F4;
+    }
+
+    .range {
+        width: 100%;
+        height: 5px;
+        margin-bottom: 55px;
+        -webkit-appearance: none;
+        background: #64638F;
+        background-image: linear-gradient(#3F3CE1, #3F3CE1);
+        background-repeat: no-repeat;
+        cursor: url("../public/icons/cursor-hover.svg"), auto;
+
+        &::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 15px;
+            width: 15px;
+            background: #4D86F4;
+            background-repeat: no-repeat;
+            cursor: url("../public/icons/cursor-hover.svg"), auto;
+        }
+
+        &::-webkit-slider-runnable-track {
+            -webkit-appearance: none;
+            box-shadow: none;
+            border: none;
+            background: transparent;
+        }
+    }
+
+    .btnWrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        gap: 20px;
+
+        .playBtn,
+        .downloadBtn {
+            flex: 1 1;
+            padding: 22px 36px;
+            background-color: #3F3CE1;
+            font-family: 'Prosto One';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 25px;
+            text-align: center;
+            text-transform: uppercase;
+            color: #FFFFFF;
+            border: none;
+            cursor: url("../public/icons/cursor-hover.svg"), auto;
+        }
+    }
+}

@@ -1,0 +1,28 @@
+// fonts
+@font-face {
+    font-family: "ProstoOne";
+    src: url("../public/fonts/ProstoOne-Regular.woff2") format("woff2"),
+        url("../public/fonts/ProstoOne-Regular.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+@font-face {
+    font-family: "Limelight";
+    src: url("../public/fonts/Limelight-Regular.woff2") format("woff2"),
+        url("../public/fonts/Limelight-Regular.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-width: 390px;
+    background-color: #0C0C0C;
+    font-family: "ProstoOne";
+    cursor: url("../public/icons/cursor.svg"), auto;
+}
