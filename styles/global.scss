@@ -21,8 +21,12 @@
 body {
     margin: 0;
     padding: 0;
-    min-width: 390px;
+    // временно
+    min-width: 1280px;
+    // временно
+    min-height: 760px;
     background-color: #0C0C0C;
     font-family: "ProstoOne";
+    position: relative;
     cursor: url("../public/icons/cursor.svg"), auto;
 }

@@ -13,7 +13,6 @@ import axios from '../core/axios.js';
 import * as Api from "../api";
 
 const Main = () => {
-    // const soundRef = React.createRef(null);
     const [audioName, setAudioName] = useState('');
     const [isFileUploaded, setFileUploaded] = useState(false);
     const [speed, setSpeed] = useState(1);
@@ -21,6 +20,7 @@ const Main = () => {
     // i decided to do this state, because audio has AudioBufer object only when it plays, when i stop it, AudioBuffer = null, i should do it because my programm is depened of AudioBuffer object.
     const [audioBuf, setAudioBuf] = useState({});
     const [isPlay, setPlay] = useState(false);
+    const [isBegin, setBegin] = useState(true);
 
     useEffect(() => {
         speedChange();
@@ -31,20 +31,26 @@ const Main = () => {
         const fileUrl = URL.createObjectURL(file);
         setAudioName(event.target.files[0].name);
 
+        // if(this.files[0].size > 314572800){
+        //     alert("File is too big!");
+        //     this.value = "";
+        //  };
 
         if (file) {
             setFileUploaded(true);
 
-            const sound = new Howl({
+            const soundHowl = new Howl({
                 src: [fileUrl], // Replace with the path to your audio file
                 rate: speed, // Initial playback rate (normal speed)
-                format: ["mp3", "opus", "ogg", "wav", "aac", "m4a", "m4b", "mp4", "webm"]
+                format: ["mp3", "opus", "ogg", "wav", "aac", "m4a", "m4b", "mp4", "webm"],
+                onend: function () {
+                    setPlay(false);
+                }
             });
 
-            sound.play()
+            soundHowl.play()
             setPlay(true);
-
-            setSound(sound);
+            setSound(soundHowl);
         }
     }
 
@@ -58,6 +64,7 @@ const Main = () => {
 
     const handleStop = () => {
         setAudioBuf(sound._sounds[0]._node.bufferSource.buffer);
+        setBegin(false);
 
         if (sound && isPlay) {
             sound.stop();
@@ -65,13 +72,11 @@ const Main = () => {
         }
     }
 
-
     const speedChange = () => {
         if (sound) {
             sound._rate = speed;
         }
     }
-
 
     const handleDownload = () => {
         if (sound) {
@@ -82,8 +87,20 @@ const Main = () => {
             audioBuffer.copyToChannel(audioBuf.getChannelData(1), 1);
             const wav = audioBufferToWav(audioBuffer);
             const wavBlob = new Blob([new DataView(wav)], { type: 'audio/wav' });
-            saveAs(wavBlob, `${audioName}_blb<3.wav`);
+            saveAs(wavBlob, `blb_planet.wav`);
         };
+    }
+
+    const handleBackBtn = () => {
+        setAudioName('');
+        setFileUploaded(false);
+        setBegin(true);
+
+        if (isPlay) {
+            setPlay(false);
+            sound.stop();
+        }
+        setSound();
     }
 
 
@@ -112,13 +129,14 @@ const Main = () => {
                                 <p className={styles.audioSpeed}>{speed}x</p>
                                 <input className={styles.range} type="range" id="speed" name="speed" min="0.5" max="3" step="0.1" value={speed} onChange={(evt) => {
                                     setSpeed(evt.target.value);
-                                }} disabled={isPlay ? 'disabled' : ""} />
+                                }} disabled={isPlay ? 'disabled' : ''} />
                                 <div className={styles.btnWrapper}>
                                     <button className={styles.playBtn} onClick={isPlay ? handleStop : handlePlay}>
                                         {isPlay ? "Stop" : "Play"}
                                     </button>
 
-                                    <button className={styles.downloadBtn} onClick={handleDownload}>Download</button>
+                                    <button className={styles.downloadBtn} onClick={handleDownload} disabled={isBegin ? 'disabled' : ''}>Download</button>
+                                    <button className={styles.backBtn} onClick={handleBackBtn}>Back</button>
                                 </div>
                             </>
                         ) : (
@@ -126,13 +144,30 @@ const Main = () => {
                                 <label htmlFor="file-upload" className={styles.labelSelect}>
                                     Select audio
                                 </label>
-                                <input className={styles.btnSelect} id="file-upload" type="file" onChange={handleFileSelect} />
+                                <input className={styles.btnSelect} id="file-upload" type="file" accept="audio/*" onChange={handleFileSelect} />
                             </>
                         )
                     }
 
                 </div>
             </div>
+            <footer className={styles.footer}>
+                <nav className={styles.nav}>
+                    <ul className={styles.list}>
+                        <li className={styles.item}>
+                            <a className={styles.link} href="https://linktr.ee/blbplanet" target="_blank">©blb projects</a>
+                        </li>
+                        <li className={styles.item}>
+                            20222
+                        </li>
+                        <li className={styles.item}>
+                            <a className={styles.link} href="https://www.donationalerts.com/r/alienba6y_blb" target="_blank">
+                                donate
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </footer>
         </>
     );
 };

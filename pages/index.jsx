@@ -69,23 +69,23 @@ const Index = () => {
 
                 {
                     isLoginForm ? (
-                        <form onSubmit={(evt) => {
+                        <form className={styles.form} onSubmit={(evt) => {
                             evt.preventDefault();
                             onSubmitLogin();
-                        }} className={styles.form}>
-                            <input type="email" placeholder='Email' onChange={(evt) => setEmail(evt.target.value)} />
-                            <input type="password" placeholder='Password' onChange={(evt) => setPassword(evt.target.value)} />
-                            <button type='submit'>Sign in</button>
+                        }}>
+                            <input className={styles.input} type="email" placeholder='Email' onChange={(evt) => setEmail(evt.target.value)} />
+                            <input className={styles.input} type="password" placeholder='Password' onChange={(evt) => setPassword(evt.target.value)} />
+                            <button className={styles.submitBtn} type='submit'>Sign in</button>
                         </form>
                     ) : (
                         <form onSubmit={(evt) => {
                             evt.preventDefault();
                             onSubmitRegistration();
                         }} className={styles.form}>
-                            <input type="text" placeholder='Full Name' onChange={(evt) => setFullName(evt.target.value)} />
-                            <input type="email" placeholder='Email' onChange={(evt) => setEmail(evt.target.value)} />
-                            <input type="password" placeholder='Password' onChange={(evt) => setPassword(evt.target.value)} />
-                            <button type='submit'>Sign up</button>
+                            <input className={styles.input} type="text" placeholder='Full Name' onChange={(evt) => setFullName(evt.target.value)} />
+                            <input className={styles.input} type="email" placeholder='Email' onChange={(evt) => setEmail(evt.target.value)} />
+                            <input className={styles.input} type="password" placeholder='Password' onChange={(evt) => setPassword(evt.target.value)} />
+                            <button className={styles.submitBtn} type='submit'>Sign up</button>
                         </form>
                     )
                 }

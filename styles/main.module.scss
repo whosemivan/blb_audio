@@ -1,4 +1,8 @@
 .mainWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     // временно
     min-width: 1280px;
@@ -11,12 +15,14 @@
         content: "";
         width: 401px;
         height: 411px;
+        background-size: 310px;
         position: absolute;
         background-image: url("../public/icons/planetone.svg");
         background-repeat: no-repeat;
-        left: 0;
+        left: 10px;
         bottom: 0;
     }
+
     &::before {
         content: "";
         width: 271px;
@@ -24,7 +30,7 @@
         position: absolute;
         background-image: url("../public/icons/planettwo.svg");
         background-repeat: no-repeat;
-        right: 0;
+        right: 10px;
         top: 0;
     }
 }
@@ -36,7 +42,6 @@
     align-items: center;
     margin: 0 auto;
     width: 380px;
-    padding-top: 155px;
 
     &::before {
         content: "";
@@ -45,8 +50,8 @@
         position: absolute;
         background-image: url("../public/icons/stars1.svg");
         background-repeat: no-repeat;
-        left: 107px;
-        top: 59px;
+        left: 120px;
+        top: 40px;
     }
 
     &::after {
@@ -54,10 +59,10 @@
         width: 135px;
         height: 135px;
         position: absolute;
-        background-image: url("../public/icons/stars1.svg");
+        background-image: url("../public/icons/stars2.svg");
         background-repeat: no-repeat;
-        right: 107px;
-        bottom: 59px;
+        right: 120px;
+        bottom: 145px;
     }
 
     .logo {
@@ -104,7 +109,7 @@
     .titleAudio {
         margin: 0;
         margin-bottom: 30px;
-        font-family: 'Prosto One';
+        font-family: 'ProstoOne';
         font-style: normal;
         font-weight: 400;
         font-size: 18.99px;
@@ -118,7 +123,7 @@
     .audioSpeed {
         margin: 0;
         margin-bottom: 30px;
-        font-family: 'Prosto One';
+        font-family: 'ProstoOne';
         font-style: normal;
         font-weight: 400;
         font-size: 30px;
@@ -168,11 +173,12 @@
         gap: 20px;
 
         .playBtn,
-        .downloadBtn {
+        .downloadBtn,
+        .backBtn {
             flex: 1 1;
             padding: 22px 36px;
             background-color: #3F3CE1;
-            font-family: 'Prosto One';
+            font-family: 'ProstoOne';
             font-style: normal;
             font-weight: 400;
             font-size: 20px;
@@ -182,6 +188,60 @@
             color: #FFFFFF;
             border: none;
             cursor: url("../public/icons/cursor-hover.svg"), auto;
+
+            &:disabled {
+                opacity: 0.7;
+            }
+        }
+
+        .backBtn {
+            padding: 20px 32px;
+            border: 2px solid #3F3CE1;
+            background: transparent;
+        }
+    }
+}
+
+.footer {
+    width: 1200px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    bottom: 20px;
+
+    .list {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+
+        .item {
+            width: 250px;
+            text-align: center;
+            font-family: 'ProstoOne';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 21.3833px;
+            line-height: 26px;
+            text-align: center;
+            text-transform: uppercase;
+            color: #FFFFFF;
+            cursor: url("../public/icons/cursor-hover.svg"), auto;
+
+            &:first-child {
+                text-align: left;
+            }
+
+            &:last-child {
+                text-align: right;
+            }
+
+            .link {
+                text-decoration: none;
+                color: #FFFFFF;
+                cursor: url("../public/icons/cursor-hover.svg"), auto;
+            }
         }
     }
 }
