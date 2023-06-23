@@ -50,6 +50,7 @@ const Main = () => {
             });
 
             soundHowl.mobileAutoEnable = false;
+            soundHowl.autoUnlock = false;
             soundHowl.play()
             setPlay(true);
             setSound(soundHowl);
