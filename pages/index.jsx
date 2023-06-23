@@ -110,6 +110,7 @@ const Main = () => {
         <>
             <Head>
                 <meta keywords="Ускорить песню, nightcore, speedup, slowed, замедлить песню, slowed music, blb" />
+                <link rel="icon" href="/icons/logo.svg" sizes="any" />
                 <title>blbplanet</title>
             </Head>
             <div className={styles.mainWrapper}>
