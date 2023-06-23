@@ -49,6 +49,7 @@ const Main = () => {
                 }
             });
 
+            soundHowl.mobileAutoEnable = false;
             soundHowl.play()
             setPlay(true);
             setSound(soundHowl);
@@ -147,7 +148,7 @@ const Main = () => {
                                 <label htmlFor="file-upload" className={styles.labelSelect}>
                                     Select audio
                                 </label>
-                                <input className={styles.btnSelect} id="file-upload" type="file" accept="audio/*" onChange={handleFileSelect} />
+                                <input className={styles.btnSelect} id="file-upload" type="file" onChange={handleFileSelect} />
                             </>
                         )
                     }
