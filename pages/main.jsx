@@ -21,6 +21,7 @@ const Main = () => {
     const [audioBuf, setAudioBuf] = useState({});
     const [isPlay, setPlay] = useState(false);
     const [isBegin, setBegin] = useState(true);
+    const [isLoad, setLoad] = useState(false);
 
     useEffect(() => {
         speedChange();
@@ -31,10 +32,10 @@ const Main = () => {
         const fileUrl = URL.createObjectURL(file);
         setAudioName(event.target.files[0].name);
 
-        // if(this.files[0].size > 314572800){
-        //     alert("File is too big!");
-        //     this.value = "";
-        //  };
+        if(event.target.files[0].size > 283613579){
+            alert("File is too big!");
+            return;
+         };
 
         if (file) {
             setFileUploaded(true);
@@ -45,6 +46,9 @@ const Main = () => {
                 format: ["mp3", "opus", "ogg", "wav", "aac", "m4a", "m4b", "mp4", "webm"],
                 onend: function () {
                     setPlay(false);
+                },
+                onload: function () {
+                    setLoad(true);
                 }
             });
 
@@ -101,6 +105,7 @@ const Main = () => {
             sound.stop();
         }
         setSound();
+        setLoad(false);
     }
 
 
@@ -131,7 +136,7 @@ const Main = () => {
                                     setSpeed(evt.target.value);
                                 }} disabled={isPlay ? 'disabled' : ''} />
                                 <div className={styles.btnWrapper}>
-                                    <button className={styles.playBtn} onClick={isPlay ? handleStop : handlePlay}>
+                                    <button className={styles.playBtn} onClick={isPlay ? handleStop : handlePlay} disabled={!isLoad ? 'disabled': ''}>
                                         {isPlay ? "Stop" : "Play"}
                                     </button>
 
