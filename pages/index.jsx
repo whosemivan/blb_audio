@@ -29,10 +29,10 @@ const Main = () => {
         const fileUrl = URL.createObjectURL(file);
         setAudioName(event.target.files[0].name);
 
-        if(event.target.files[0].size > 283613579){
+        if (event.target.files[0].size > 283613579) {
             alert("File is too big!");
             return;
-         };
+        };
 
         if (file) {
             setFileUploaded(true);
@@ -51,23 +51,24 @@ const Main = () => {
 
             soundHowl.mobileAutoEnable = false;
             soundHowl.autoUnlock = false;
-            soundHowl.play()
-            setPlay(true);
+            // soundHowl.play()
+            // setPlay(true);
             setSound(soundHowl);
         }
     }
 
     const handlePlay = () => {
-        if (sound && !isPlay) {
+        if (!isPlay) {
             sound.play();
             setAudioBuf(sound._sounds[0]._node.bufferSource.buffer);
             setPlay(true);
+            setBegin(false);
         }
     };
 
     const handleStop = () => {
         setAudioBuf(sound._sounds[0]._node.bufferSource.buffer);
-        setBegin(false);
+        // setBegin(false);
 
         if (sound && isPlay) {
             sound.stop();
@@ -136,7 +137,7 @@ const Main = () => {
                                     setSpeed(evt.target.value);
                                 }} disabled={isPlay ? 'disabled' : ''} />
                                 <div className={styles.btnWrapper}>
-                                    <button className={styles.playBtn} onClick={isPlay ? handleStop : handlePlay} disabled={!isLoad ? 'disabled': ''}>
+                                    <button className={styles.playBtn} onClick={isPlay ? handleStop : handlePlay} disabled={!isLoad ? 'disabled' : ''}>
                                         {isPlay ? "Stop" : "Play"}
                                     </button>
 
