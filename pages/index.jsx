@@ -51,8 +51,6 @@ const Main = () => {
 
             soundHowl.mobileAutoEnable = false;
             soundHowl.autoUnlock = false;
-            // soundHowl.play()
-            // setPlay(true);
             setSound(soundHowl);
         }
     }
@@ -68,7 +66,6 @@ const Main = () => {
 
     const handleStop = () => {
         setAudioBuf(sound._sounds[0]._node.bufferSource.buffer);
-        // setBegin(false);
 
         if (sound && isPlay) {
             sound.stop();
@@ -91,7 +88,7 @@ const Main = () => {
             audioBuffer.copyToChannel(audioBuf.getChannelData(1), 1);
             const wav = audioBufferToWav(audioBuffer);
             const wavBlob = new Blob([new DataView(wav)], { type: 'audio/wav' });
-            saveAs(wavBlob, `blb_planet.wav`);
+            saveAs(wavBlob, `${audioName.split('.')[0]}_blb.wav`);
         };
     }
 
