@@ -24,8 +24,6 @@ const Main = () => {
         speedChange();
     }, [speed])
 
-    console.log(navigator.userAgent.includes('OPR/')) // Opera's user agent contains 'OPR/'.
-
     const handleFileSelect = async (event) => {
         const file = event.target.files[0];
         const fileUrl = URL.createObjectURL(file);
